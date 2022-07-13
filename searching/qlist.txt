@@ -1,0 +1,5 @@
+binary search
+binary saerch for dsc sorted
+order agnostic search
+
+first occ, last occ. count of total occ of an element in sorted array
