@@ -352,3 +352,45 @@ int countRotatedFreq (int *arr, int n) {
         }
         return false;
     }
+
+
+    // allocate pages of book
+    bool isValid (int *nums, int n, int k, int ans) {
+    	int student = 1;
+    	int sum = 0;
+
+    	for (int i = 0 ; i < n; ++i) {
+    		sum = sum + nums[i];
+    		if (sum > ans) {
+    			student++;
+    			sum = nums[i];
+    		}
+    		else {
+    			sum += nums[i];
+    		}
+    	}
+        return (student <= k);
+    }
+
+    int allocateMinBooks (int *arr, int n, int k) {
+    	int sum = 0, maxEl = 0;
+    	int res = -1;
+
+    	for (int i = 0; i < n; ++i) {
+    		sum += arr[i];
+    		maxEl = max(maxEl, arr[i]);
+    	}
+    	int start = maxEl, end = sum;
+
+    	while (start <= end) {
+    		int mid = start + (end - start) / 2;
+    		if (isValid(arr, n, k, mid)) {
+    			res = mid;
+    			end = mid - 1;
+    		}
+    		else {
+    			start = mid + 1;
+    		}
+    	}
+    	return res;
+    }
