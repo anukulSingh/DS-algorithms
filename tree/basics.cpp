@@ -51,6 +51,9 @@ class node {
 
         
 };
+
+int maxLevel = 0;
+
 // level -order traversal using a queue
         void printLevel (node *root) {
             if (root == NULL) return;
@@ -106,6 +109,54 @@ void printLevelMod(node *root) {
                 cout << "\n";
             }
         }
+
+
+void printLeftRecursive(node *root) {
+    if (root == NULL) return ;
+    if (maxLevel < level) {
+        cout << root->key;
+        maxLevel = level;
+    }
+    printLevelRecursive(root->left, level+1);
+    printLevelRecursive(root->right, level + 1);
+
+}
+
+
+void printLeft(node *root) {
+    if (root == NULL) return;
+    queue<node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int count = q.size();
+        for (int i = 0; i < count; ++i) {
+            node *curr = q.top();
+            q.pop();
+            if (i == 0)
+                cout << curr->key;
+            if (curr->left) q.push(curr->left);
+            if (curr->right) q.push(curr->right);
+
+        }
+    }
+}
+
+// children sum property
+// sum of sum of values of left and right child should be equal to that of the node value
+bool isChildrenSum(node *root) {
+    if (root == NULL) return true;
+    if (root->left == NULL && root->right == NULL) return true;
+    int sum = 0;
+    if (root->left) sum += root->left->key;
+    if (root->right) sum += root->right->key;
+
+    return (
+        root->key == sum &&
+        isChildrenSum(root->left) &&
+        isChildrenSum(root->right)
+    );
+}
     
 // size of a binary tree
 // TC O(n) AS is O(h)

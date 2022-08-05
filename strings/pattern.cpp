@@ -39,8 +39,44 @@ void naiveSearchDistinct (string &txt, string &pat) {
 // rabin carp algorithn, uses hashing
 // O(|s| + |t|) time
 //Problem: Given two strings - a pattern s and a text t, determine if the pattern appears in the text and if it does, enumerate all its occurrences 
-vector <int> rabin_carp (string const &s, string const &t) {
-    
+// t(i+1) = t(i) + txt[i+m] = txt[i] (sliding window, rolling hash)
+// but is causes spurious hit ("god" == "dog")
+// better hash function is weughted sum
+// here, rolling hash formula is:
+// t (i+1) = d (t(i) - txt[i] * pow(d, m-1)) + txt[i+m]
+vector <int> rabin_carp (string const &pat, string const &txt, int m, int n) {
+    const int d = 256;
+    const int q = 101;
+    // compute (d^ (m-1)) % q
+    int h = 1;
+    for (int i = 0; i < m-1; ++i)
+        h = (h*d) % q;
+
+    // compute pattern's and first window's hash
+    int p = 0, t = 0;
+    for (int i = 0; i < m; ++i) {
+        p = (p*d + pat[i]) % q;
+        t = (t*d + txt[i]) % q;
+    }
+    for (int i = 0; i < (n-m); ++i) {
+        // check for hit
+        if (p == t) {
+            bool flag = true;
+            for (int j = 0; j < m; ++j) {
+                if (txt[i+j] != pat[j]) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) cout << i << " ";
+        }
+        // compute t(i+1) using t(i)
+        if (i < (n-m)) {
+            t = (d * (t - txt[i] * h) + txt[i+m]) % q;
+            if (t < 0) t+= q;
+        }
+    }
+
 }
 int main () {
 
