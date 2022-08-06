@@ -89,6 +89,8 @@ int lastOcc (int *arr, int n, int x) {
 //  number of rotation in clockwise direction =len(array)-index of minimum element 
 // now we find min element using b-search
 // here reqd element is the only no smaller than bith of its neighbour
+
+//For a sorted (in increasing order) and rotated array, the pivot element is the only element for which the next element to it is smaller than it.
 int countRotatedFreq (int *arr, int n) {
 	int start = 0, end = n-1;
 
@@ -160,10 +162,10 @@ int countRotatedFreq (int *arr, int n) {
         if (arr[mid] == x) {
         	return mid;
         }
-        else if (mid >= l && arr[mid - 1] == x) {
+        else if (mid >= start && arr[mid - 1] == x) {
         	return mid -1;
         }
-        else if (mid <= r && arr[mid + 1] == x) {
+        else if (mid <= end && arr[mid + 1] == x) {
         	return mid+1;
         }
         else if (arr[mid] > x) {
@@ -294,7 +296,7 @@ int countRotatedFreq (int *arr, int n) {
 
   	int mid = start + (end - start) / 2;
 
-  	while (start <- end) {
+  	while (start <= end) {
   		if (mid > 0 && mid < n-1) {
   			if (arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1]) {
   				return mid;

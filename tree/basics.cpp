@@ -157,6 +157,58 @@ bool isChildrenSum(node *root) {
         isChildrenSum(root->right)
     );
 }
+
+
+// check for a balanced BT
+// diff bw right subtree and left subtree for any node should not exceed 1
+// Naive way
+bool checkBalanced (node *root) {
+    if (root == NULL) return true;
+    int lh = height(root->left);
+    int rh = height(root->right);
+
+    return (
+        abs(lh - rh) <= 1 &&
+        checkBalanced(lh->left) &&
+        checkBalanced(lh->right)
+    );
+}
+
+// efficient
+int checkBalanced(node *root) {
+    if (root == NULL) return 0;
+    int lh = checkBalanced(root->left);
+    if (lh == -1) return -1;
+    int rh = checkBalanced(root->right)
+    if (rh == -1) return -1;
+
+    if (abs(lh - rh) > 1) return -1;
+    else return max(lh, rh) + 1;
+}
+
+// max width of binar7 tree at any level
+int maxWidth (node *root) {
+    if (root == NULL) return 0;
+    queue<node*> q;
+    q.push(root);
+    int res = INT_MIN;
+    while (!q.empty()) {
+        int count = q.size();
+        ans = max(ans, count);
+        for (int i = 0; i < count; ++i) {
+            node *curr = q.front();
+            q.pop();
+
+            if (curr->left) q.push(curr->left);
+            if (curr->right) q.push(curr->righ);
+        }
+    }
+    return res;
+}
+
+
+// convet binary tree to doubly linked list in place
+
     
 // size of a binary tree
 // TC O(n) AS is O(h)
