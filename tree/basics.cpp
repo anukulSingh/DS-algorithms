@@ -207,7 +207,47 @@ int maxWidth (node *root) {
 }
 
 
+
+
 // convet binary tree to doubly linked list in place
+// use an inorder travesal
+// use left for prev and right for next
+node *prev = NULL;
+node* convertToDll(node *root) {
+    if (root == NULL) return root;
+    node *head = convertToDll(root->left);
+    if (prev == NULL) head = root;
+    else {
+        root->left = prev;
+        prev->right = right;
+    }
+    prev = root;
+    convertToDll(root->right);
+    return head;
+}
+
+// given inorder and preorder travesal, construct the tree
+// we can get the root at all level from preorder
+// and left amd right tree for inorder
+
+// an efficient way is to take hashset and use it
+int preIndex = 0;
+node *cTree(int *int, int *pre, int is, int ie) {
+    if (is > ie) return NULL;
+
+    node *root = new Node(pre[preIndex++]);
+    int inIndex;
+    for (int i = is; i <= ie; ++i) {
+        if (in[i] == root->key) {
+            inIndex = i;
+            break;
+        }
+    }
+    root->left = cTree(in, pre, is, inIndex - 1);
+    root->right = cTree(in, pre, inIndex, ie);
+}
+
+// LCA of a node in binary tree
 
     
 // size of a binary tree
