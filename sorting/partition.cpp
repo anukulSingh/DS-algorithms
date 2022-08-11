@@ -5,35 +5,40 @@ using namespace std;
 // Naive partition (stable)
 // TC & AS O(n)
 // given an index, make smaller els befor it, and greater after it (any order)
-// int partition (int *arr, int l, int h, int p) {
-//     int temp[h - l + 1], index = 0;
-//     // putting smaller elements
-//     for (int i = l; i <= h; ++i) {
-//         if (arr[i] <= arr[p] && i != p) {
-//             temp[index] = arr[i];
-//             index++;
-//         }
-//     }
-//     int res = index;
-//     temp[index++] = arr[p];
-//     // putting larger elements
-//     for (int i = l;i <h; ++i) {
-//         if (arr[i] > arr[p]) {
-//             temp[index] = arr[i];
-//             index++;
-//         }
-//     }
-//     for (int i =l; i <=h; ++i)
-//         arr[i] = temp[i-l];
+int partition (int *arr, int l, int h, int p) {
+    int temp[h - l + 1], index = 0;
+    // putting smaller elements
+    for (int i = l; i <= h; ++i) {
+        if (arr[i] <= arr[p] && i != p) {
+            temp[index] = arr[i];
+            index++;
+        }
+    }
+    int res = index;
+    temp[index++] = arr[p];
+    // putting larger elements
+    for (int i = l;i <h; ++i) {
+        if (arr[i] > arr[p]) {
+            temp[index] = arr[i];
+            index++;
+        }
+    }
+    for (int i =l; i <=h; ++i)
+        arr[i] = temp[i-l];
 
-//     return res;
-// }
+    return res;
+}
+
+// lomuto partition ensures that pivot is at correct place,
+// while hoare simply partition array into two parts
 
 // Lomuto partition AS here is constant
 // generally pivot is at last in lomuto
+// at any time , we aintain two windows (smaller than pivot, and larger)
+// i denotes end of smaller elements window
 int lpartition (int *arr, int l, int h) {
 
-    // swap(arr[pivot], arr[h]);   // to keep pivot at last
+    // swap(arr[pivot], arr[h]);   // to keep pivot at last if not at last
     int pivot = arr[h];
 
     int i =  l -1;   // i keeps track of smaller elements
@@ -44,30 +49,33 @@ int lpartition (int *arr, int l, int h) {
         }
     }
     swap(arr[i+1], arr[h]);
-    return i+1;
+    return i+1; // returns new index of pivot
     
 }
 
-// Hoare's partition
-// works better than lomuto, but
-// pivot element is not here at correct place, included in second half
-// elements till j are smaller than pivot
-// normally pivot is the first element here
-// it is unstable like lomuto, unlike naive
-// int hpartition(int *arr, int l, int h) {
-//     int pivot = arr[l];
-//     int i = l-1, j = h+1;
-//     while (true) {
-//         do {
-//             i++;
-//         }while (arr[i] < pivot); // i stops where it is gte pivot
-//          do {
-//             j--;
-//         }while (arr[j] > pivot); // j stops where it is lt pivot
-//         if (i >= j) return j;
-//         swap (arr[i], arr[j]);
-//     }
-// }
+/** Hoare's partition
+ works better than lomuto, but
+ elements till j are smaller than pivot
+ normally pivot is the first element here
+ it is unstable like lomuto, unlike naive
+
+ at any moment, we ensure that elements from l to i are smaller than pivot
+ and elements from j to h are greater than or equal to pivot
+**/
+int hpartition(int *arr, int l, int h) {
+    int pivot = arr[l];
+    int i = l-1, j = h+1;
+    while (true) {
+        do {
+            i++;
+        }while (arr[i] < pivot); // i stops where it is gte pivot
+         do {
+            j--;
+        }while (arr[j] > pivot); // j stops where it is lte pivot
+        if (i >= j) return j;
+        swap (arr[i], arr[j]);
+    }
+}
 
 // Quick sort points
 // Divide & conquer algorithm

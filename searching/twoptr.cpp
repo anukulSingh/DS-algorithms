@@ -127,9 +127,6 @@ void repeating_missing (vector <int> &arr) {
 
 }
 
-// combine 2 sorted arrays, make a new sorted one and find its median
-// median is middle element or average of middle ones
-double findMedianTwo()
 
 int main() {
     // int arr[] = {2,3,5,7,8};

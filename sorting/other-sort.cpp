@@ -2,6 +2,55 @@
 using namespace std;
 
 
+// Worst and Average Case Time Complexity: O(n*n). Worst case occurs when array is reverse sorted.
+// Best Case Time Complexity: O(n). Best case occurs when array is already sorted.
+// Auxiliary Space: O(1)
+// Boundary Cases: Bubble sort takes minimum time (Order of n) when elements are already sorted.
+// Sorting In Place: Yes
+// Stable: Yes
+void bubbleSort(int *arr, int n) {
+    for (int i = 0; i < n-1; ++i) {
+        bool swapped = false;
+
+        for (int j = 0; j<n-i-1; ++j) {
+            if (arr[j] > arr[j+1]) {
+                swap(arr[j],arr[j+1]);
+                swapped = true;
+            }
+        }
+        if (swapped == false)
+            break;
+    }
+}
+
+// in place
+// stable
+// good for memory intensive resource
+// not stable, but can be made so
+void selectionSort(int *arr, int n) {
+
+    for (int i =0; i< n-1; ++i) {
+        int min_index = i;
+        for (int j = i+1; j < n; ++j) 
+            if (arr[j] < arr[min_index])
+                min_index = j;
+        swap(arr[min_index], arr[i]);
+    }
+}
+
+void insertionSort(int *arr, int n) {
+    for (int i =1; i< n; ++i) {
+        int key = arr[i];
+        int j = i-1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j+1] = arr[j];
+            j--;
+        }
+        arr[j+1] = key;
+    }
+}
+
+
 // 1 Cycle sort - O(n^2) worst case algo
 // least memory writes among all others, useful where mem-write is costly
 // In place and unstable

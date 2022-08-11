@@ -1,7 +1,27 @@
 #include <iostream>
-#include <cstring>
+
 using namespace std;
 
+
+// staircase problem
+// How many ways you can reach nth stair from 0the stair , making a jump of 1 or 2
+// int dp[10001];
+// int mod = 1e9+7;
+void stair() {
+    dp[1] = 1 // 1 way for 1st
+    dp[2] = 1 // 2 ways for 2nd
+    for (int i = 3; i <= 1000; ++i)
+        dp[i] = (dp[i-1] + dp[i-2]) % mod;
+}
+
+// important recursive approach
+int dp[100001];
+int stairs(int n) {
+    if (n <= 2) return n;
+    if (dp[n] != 0) return dp[n];
+    dp[n] = stairs(n-1) + stairs(n-2);
+    return dp[n];
+}
 
 // dp memorization for a fibonacci series
 // tc reduced from exp to linear
@@ -31,15 +51,6 @@ int fib (int n) {
         f[i] = f[i-1] + f[i-2];
     return f[n];
 }
-
-
 int main() {
 
-    // memset(memo, -1, sizeof(memo));
-    // cout << fib(5);
-
-    int n = 5;
-    cout << fib(n);
-
-    return 0;
 }
