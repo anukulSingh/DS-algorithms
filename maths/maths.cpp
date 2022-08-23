@@ -7,83 +7,83 @@
 using namespace std;
 
 // count number of digits
-// int count_digit(int n) {
-// 	return  n > 0 ? (int) (log10 (n) + 1) : (int) (log10 (-n) + 1);
-// }
+int count_digit(int n) {
+	return  n > 0 ? (int) (log10 (n) + 1) : (int) (log10 (-n) + 1);
+}
 
 // check for palindrome
-// bool isPalindrome(int n) {
-// 	int rev = 0;
-// 	int temp = n;
-// 	while (temp != 0) {
-// 		int last_digit = temp % 10;
-// 		rev = rev*10 + last_digit;
-// 		temp /= 10;
-// 	}
-// 	return (rev == n);
-// }
+bool isPalindrome(int n) {
+	int rev = 0;
+	int temp = n;
+	while (temp != 0) {
+		int last_digit = temp % 10;
+		rev = rev*10 + last_digit;
+		temp /= 10;
+	}
+	return (rev == n);
+}
 
 // factorial implemntation, iterative way is better
-// int fact (int n) {
-// 	int res = 1;
-// 	for (int i = 2; i <= n; ++i) 
-// 		res *= i;
-// 	return res;
-// }
+int fact (int n) {
+	int res = 1;
+	for (int i = 2; i <= n; ++i) 
+		res *= i;
+	return res;
+}
 
 // trailing zeroes in factorial
-// int countTrailingZeroes (int n) {
-// 	int res = 0;
-// 	for (int i = 5; i <= n; i *= 5)
-// 		res += n/i;
-// 	return res;
-// }
+int countTrailingZeroes (int n) {
+	int res = 0;
+	for (int i = 5; i <= n; i *= 5)
+		res += n/i;
+	return res;
+}
 
 // gcd of two numbers  d = (a,b)
 // 'or' largest square of size d*d by which we can fill rect a*b
 // Euclidean algorithm
-// int gcd (int a, int b) {
-// 	while (a != b) {
-// 		if (a > b)
-// 			a = a - b;
-// 		else
-// 			b = b - a;
-// 	}
-// 	return a;
-// }
+int gcd (int a, int b) {
+	while (a != b) {
+		if (a > b)
+			a = a - b;
+		else
+			b = b - a;
+	}
+	return a;
+}
 
 // optimized Euclidean algorithm
 // O(log(min(a, b)))
-// int gcd (int a, int b) {
-// 	if (b == 0)
-// 		return a;
-// 	else 
-// 		gcd(b, a % b);
-// }
+int gcd (int a, int b) {
+	if (b == 0)
+		return a;
+	else 
+		gcd(b, a % b);
+}
 
 // iterative gcd
 // O(log min(a, b))
-// int gcdFaster (int a, int b) {
-// 	while(b) {
-// 		a %= b;
-// 		swap(a, b);
-// 	}
-// 	return a;
-// }
+int gcdFaster (int a, int b) {
+	while(b) {
+		a %= b;
+		swap(a, b);
+	}
+	return a;
+}
 
 // // Extended euclidean algorithm
-// int gcdExtended (int a, int b, int &x, int &y) {
-// 	 if (b == 0) {
-//         x = 1;
-//         y = 0;
-//         return a;
-//     }
-//     int x1, y1;
-//     int d = gcd(b, a % b, x1, y1);
-//     x = y1;
-//     y = x1 - y1 * (a / b);
-//     return d;
-// }
+int gcdExtended (int a, int b, int &x, int &y) {
+	 if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    int x1, y1;
+    int d = gcd(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - y1 * (a / b);
+    return d;
+}
  int gcdExFaster(int a, int b, int &x, int &y) {
 
     int x1 = 0, y1 = 1, a1 = a, b1 = b;
@@ -115,22 +115,22 @@ pair<int, int> find_any_solution (int a, int b, int c) {
 
 
 // check for prime
-// bool isPrime (int n) {
-// 	if (n == 1) return false;
-// 	if (n == 2 || n == 3) return true;
-// 	if (n % 2 == 0 || n % 3 == 0)
-// 		return false;
-// 	for (int i = 5; i*i <= n; i += 6) 
-// 		if (n % i == 0 || n % (i + 2) == 0)
-// 			return false;
-// 	return true;
-// }
+bool isPrime (int n) {
+	if (n == 1) return false;
+	if (n == 2 || n == 3) return true;
+	if (n % 2 == 0 || n % 3 == 0)
+		return false;
+	for (int i = 5; i*i <= n; i += 6) 
+		if (n % i == 0 || n % (i + 2) == 0)
+			return false;
+	return true;
+}
 
 // lcm finding, TC same as gcd
 // length of the smallest square that can be constructed using one or more rectangular pieces of dim a and b
-// int lcm (int a, int b) {
-// 	return (a * b)/ gcd(a,b);
-// }
+int lcm (int a, int b) {
+	return (a * b)/ gcd(a,b);
+}
 
 // prime factors of a number
 // O(sqrt(n))
@@ -161,43 +161,43 @@ void printPrimeFactors (int n) {
 
 // divisors of a number in sorted order
 // theta(sqrt(n))
-// void printDivisors(int n) {
-// 	int i;
-// 	for (i = 1; i*i < n; ++i)
-// 		if (n % i == 0) {
-// 			cout << i <<" ";
-// 		}
-// 		--i;
-// 	for ( ;i >= 1; --i)
-// 		if (n % i == 0)
-// 			cout << n/i << " ";
-// }
+void printDivisors(int n) {
+	int i;
+	for (i = 1; i*i < n; ++i)
+		if (n % i == 0) {
+			cout << i <<" ";
+		}
+		--i;
+	for ( ;i >= 1; --i)
+		if (n % i == 0)
+			cout << n/i << " ";
+}
 
 // Sieve of Erastothenes to print prime numbers
-// void sieve(int n) {
-// 	vector <bool> isPrime(n+1, true);
-// 	for (int i = 2; i*i <= n; ++i) {
-// 		if (isPrime[i]) {
-// 			for (int j = 2*i; j <= n; j = j + i)
-// 				isPrime[j] = false;
-// 		}
-// 	}
-// 	for (int i = 2; i <=n; ++i)
-// 		if(isPrime[i])
-// 			cout << i << " ";
-// }
+void sieve(int n) {
+	vector <bool> isPrime(n+1, true);
+	for (int i = 2; i*i <= n; ++i) {
+		if (isPrime[i]) {
+			for (int j = 2*i; j <= n; j = j + i)
+				isPrime[j] = false;
+		}
+	}
+	for (int i = 2; i <=n; ++i)
+		if(isPrime[i])
+			cout << i << " ";
+}
 
 //optimized sieve O(n loglogn) ~ O(n)
-//void sieve(int n) {
-	//vector <bool> isPrime(n+1, true);
-	//for (int i = 2; i <= n; ++i){
-	//	if (isPrime[i]){
-	//		cout << i << " ";
-		//	for (int j = i*i; j <= n; j = j + i)
-			//	isPrime[j] = false;
-		//}
-	//}
-//}
+void sieve(int n) {
+	vector <bool> isPrime(n+1, true);
+	for (int i = 2; i <= n; ++i){
+		if (isPrime[i]){
+			cout << i << " ";
+			for (int j = i*i; j <= n; j = j + i)
+				isPrime[j] = false;
+		}
+	}
+}
 
 // rule of thumb
 //pow(a, n) = 1, if n == 0
@@ -205,42 +205,42 @@ void printPrimeFactors (int n) {
 // 		   = pow(pow(a, n-1/2), 2)*a, if n > 0 and odd
 
 // COmputing power  O(log n)
-// int power(int x, int n) {
-// 	if (n == 0)
-// 		return 1;
-// 	int temp = power(x, n/2);
-// 	temp *= temp;
-// 	return (n % 2 == 0) ? temp : temp*x;
-// } 
+int power(int x, int n) {
+	if (n == 0)
+		return 1;
+	int temp = power(x, n/2);
+	temp *= temp;
+	return (n % 2 == 0) ? temp : temp*x;
+} 
 
 // Iterative power
-// Binary exponentiation
-// int powerIterative(int x, int n) {
-// 	int res = 1;
-// 	while (n>0) {
-// 		if (n & 1)  // n%2!=0 can be written as such, gives non-zero if odd
-// 			res *= x;
-// 		x = x*x;
-// 		n = n>>1; // n/=2 can be written as such
-// 	}
-// 	return res;
-// }
+Binary exponentiation
+int powerIterative(int x, int n) {
+	int res = 1;
+	while (n>0) {
+		if (n & 1)  // n%2!=0 can be written as such, gives non-zero if odd
+			res *= x;
+		x = x*x;
+		n = n>>1; // n/=2 can be written as such
+	}
+	return res;
+}
 
 // computing pow(x, n) mod m in log time
 // same as prev
 // if m is prime, we can speed up using fermat little theorem as:
 // in pow(x ,n), replace n by n % (m-1)
-// int powerIterativeMod(int x, int n, int m) {
-// 	a %= m;
-// 	int res = 1;
-// 	while (n>0) {
-// 		if (n & 1)  // n%2!=0 can be written as such, gives non-zero if odd
-// 			res *= x % m;
-// 		x = x*x % m;
-// 		n = n >> 1; // n/=2 can be written as such
-// 	}
-// 	return res;
-// }
+int powerIterativeMod(int x, int n, int m) {
+	a %= m;
+	int res = 1;
+	while (n>0) {
+		if (n & 1)  // n%2!=0 can be written as such, gives non-zero if odd
+			res *= x % m;
+		x = x*x % m;
+		n = n >> 1; // n/=2 can be written as such
+	}
+	return res;
+}
 
 // variation of binary exponentiation in multiply a*b(mod m)
 // a*b = 2 * a/2 * b, iff a > 0 and even
@@ -249,44 +249,44 @@ void printPrimeFactors (int n) {
 
 // perfect number - if sum of proper divisors is equal to number itself
 // proper divisor is excluding number itself
-// bool isPerfect(int n) {
-// 	int sum =   1;
-// 	for (int i = 2; i*i <= n; ++i) {
-// 		if (n % i == 0) {
-// 			if (i*i != n) {
-// 				sum += i + n/i;
-// 			}
-// 			else
-// 				sum += i;
-// 		}
-// 	}
-// 	if (sum == n && n!= 1)
-// 		return true;
-// 	return false;
-// }
+bool isPerfect(int n) {
+	int sum =   1;
+	for (int i = 2; i*i <= n; ++i) {
+		if (n % i == 0) {
+			if (i*i != n) {
+				sum += i + n/i;
+			}
+			else
+				sum += i;
+		}
+	}
+	if (sum == n && n!= 1)
+		return true;
+	return false;
+}
 
 //   Armstrong number
 // abc.. = pow(a,n) + pow(b,n) + pow(c,n)+...
 // ex 153 = 1*1*1 + 5*5*5 + 3*3*3
 // function to calculate order of a number
-// int order (int x) {
-// 	int n = 0;
-// 	while (x) {
-// 		n++;
-// 		x /= 10;
-// 	}
-// 	return n;
-// }
-// bool isArmstrong (int num) {
-// 	int n = order(num);
-// 	int temp = num, sum = 0;
-// 	while (temp) {
-// 		int digit = temp % 10;
-// 		sum += power(digit, n);
-// 		temp /= 10;
-// 	}
-// 	return (sum == num)
-// }
+int order (int x) {
+	int n = 0;
+	while (x) {
+		n++;
+		x /= 10;
+	}
+	return n;
+}
+bool isArmstrong (int num) {
+	int n = order(num);
+	int temp = num, sum = 0;
+	while (temp) {
+		int digit = temp % 10;
+		sum += power(digit, n);
+		temp /= 10;
+	}
+	return (sum == num)
+}
 
 
 // Euler totient function

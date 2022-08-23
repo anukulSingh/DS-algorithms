@@ -2,30 +2,52 @@
 using namespace std;
 
 // keep track of index of largest and second largest element in array, take a llok
-// int secondLargest(int *arr, int n) {
-//     int res = -1, largest = 0;
-//     for (int i = 1; i < n; ++i) {
-//         if (arr[i] > arr[largest]) {
-//             res = largest;
-//             largest = i;
-//         }
-//         else if (arr[i] != arr[largest]){
-//             if ((res == -1) || (arr[i] > arr[res]))
-//                 res = i;
-//         }
-//     }
-//     return res;
-// }
+int secondLargest(int *arr, int n) {
+    int res = -1, largest = 0;
+    for (int i = 1; i < n; ++i) {
+        if (arr[i] > arr[largest]) { // if current is gt than largest, make curr largest as second largest as curr as largest
+            res = largest;
+            largest = i;
+        }
+        else if (arr[i] != arr[largest]){ // if curr smaller than largest, check if it is gt than second largest
+            if ((res == -1) || (arr[i] > arr[res]))
+                res = i;
+        }
+    }
+    return res;
+}
+
+void largestThree(int *arr, int n) {
+    int first,second,third;
+    if (n < 3) {
+        cout << "Invalid input";
+        return;
+    }
+    first = second = third = INT_MIN;
+    for (int i = 0; i < n; ++i) {
+        if (arr[i] > first) {    // if curr is gt tha first largest, updathe the three flags
+            third = second;
+            second = first;
+            first = arr[i];
+        } else if (arr[i] > second) { // if gt than second, update second and third flags
+            third = second;
+            second = arr[i];
+        } else if (arr[i] > third) { // if gt than third, updaye only third
+            third = arr[i];
+        }
+    }
+    cout << first << endl << second << endl << third;
+}
 
 // check if array is sorted
 // one  way of keeping track of two els
 
-// bool isSorted (int *arr, int n) {
-//     for (int i = 1; i < n; ++i) 
-//         if (arr[i] < arr[i-1])
-//             return false;
-//     return true;
-// }
+bool isSorted (int *arr, int n) {
+    for (int i = 1; i < n; ++i) 
+        if (arr[i] < arr[i-1])
+            return false;
+    return true;
+}
 
 // Reverse an array
 void reverse (int *arr, int d, int n) {
@@ -43,44 +65,44 @@ void reverse (int *arr, int d, int n) {
 
 // Remove dups from sorted array and return size of first distinct
 // another way of keeping track of two elements
-// void removeDuplicate (int *arr, int n) {
-//     int res = 1;
-//     for (int i =1; i <n; ++i) {
-//         if (arr[i] != arr[res-1]) {
-//             arr[res] = arr[i];
-//             res++;
-//         }
-//     }
-//     for (int i = 0; i<n; ++i)
-//          cout << arr[i]<< " ";
-//     cout<<endl;
-//     return res;
-// }
+void removeDuplicate (int *arr, int n) {
+    int res = 1;
+    for (int i =1; i <n; ++i) {
+        if (arr[i] != arr[res-1]) {
+            arr[res] = arr[i];
+            res++;
+        }
+    }
+    for (int i = 0; i<n; ++i)
+         cout << arr[i]<< " ";
+    cout<<endl;
+    return res;
+}
 
 // move all zeroes to end, maintaining the order
-// void moveToEnd(int *arr, int n) {
-//     int count = 0;
-//     for (int i =0; i < n; ++i) {
-//         if (arr[i] != 0) {
-//             swap(arr[i], arr[count]);
-//             count ++;
-//         }
-//     }
-// }
+void moveToEnd(int *arr, int n) {
+    int count = 0;
+    for (int i =0; i < n; ++i) {
+        if (arr[i] != 0) {
+            swap(arr[i], arr[count]);
+            count ++;
+        }
+    }
+}
 
 // left rotate arry by D places
-// void leftRotate(int *arr, int n, int d) {
-//     reverse(arr, 0, d-1);
-//     reverse(arr,d,n-1);
-//     reverse(arr, 0, n-1);
-// }
+void leftRotate(int *arr, int n, int d) {
+    reverse(arr, 0, d-1);
+    reverse(arr,d,n-1);
+    reverse(arr, 0, n-1);
+}
 
 // // right rotate array by d places
-// void rightRotate(int *arr, int n, int d) {
-//     reverse(arr, 0, n-1);
-//     reverse(arr, 0, d-1);
-//     reverse(arr, d, n-1);
-// }
+void rightRotate(int *arr, int n, int d) {
+    reverse(arr, 0, n-1);
+    reverse(arr, 0, d-1);
+    reverse(arr, d, n-1);
+}
 
 // Leaders in an array, take a look
 // void leaders(int *arr, int n) {
@@ -230,6 +252,9 @@ int maxOcc (int *l , int *r, int n) {
         return res;
     }
 }
+
+
+// minimum group flips to make arrays same
 
 
 int main() {

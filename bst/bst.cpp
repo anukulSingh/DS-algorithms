@@ -53,6 +53,7 @@ bool isBST(Node *root) {
     prev = root->key;
     return (isBST(root->right));
 }
+
 // fix two swapped nodes
 // do inorder, and push it in array, and in array find two eles swapping which, array becomes sorted
 // now it becomes an array problem
@@ -107,7 +108,7 @@ void vTraversal(Node *root) {
 
     while (!q.empty()) {
         auto p = q.front();
-        Node *curr = q.front();
+        Node *curr = p.first;
         int hd = p.second;
         mp[hd].push_back(curr->key);
         q.pop();
