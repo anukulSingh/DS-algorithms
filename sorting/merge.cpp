@@ -121,46 +121,98 @@ void unionEl(int *a, int *b, int m, int n) {
 // using concept of merge sort
 // TC O(n log n) & AS O(n)
 
-int countAndMerge(int *a, int low, int mid, int high) {
+  long long countAndMerge(long long arr[], long long l, long long m , long long r) {
+      long long j = m + 1;
+      long long count = 0;
+      
+      for (long long i = l; i <= m; ++i) {
+          while (j <= r && arr[i] > arr[j]) {
+              j++;
+          }
+          count += (j - (m + 1));
+      }
+      
+      // merge logic
+      long long left = l, right = m + 1;
+      vector<long long> temp;
+      while (left <= m && right <= r) {
+          if (arr[left] <= arr[right]) {
+              temp.emplace_back(arr[left++]);
+          } else {
+              temp.emplace_back(arr[right++]);
+          }
+      }
+      
+      while (left <= m)
+        temp.emplace_back(arr[left++]);
+      while (right <= r) {
+          temp.emplace_back(arr[right++]);
+      }
+      
+      for (int i = l; i <= r; ++i) {
+          arr[i] = temp[i - l];
+      }
+      
+      return count;
+    }
+    long long int countInv(long long arr[], long long l, long long r) {
+        long long res = 0;
+        if (l >= r) return 0;
+        
+            long long m = l + (r - l) / 2;
+            res += countInv(arr, l, m);
+            res += countInv(arr, m+1, r);
+            res += countAndMerge(arr, l, m, r);
+        
+        return res;
+    }
 
-    // setting up auxiliary array
-    int n1 = mid - low +1, n2 = high - mid;
-    int left[n1], right[n2];
-    for (int i =0; i < n1; ++i)
-        left[i] = a[low + i];
-    for (int i =0; i < n2; ++i)
-        right[i] = a[mid + i + 1];
-
-    // standard merge logic
-    int res = 0;
-    int i =0, j =0, k = low;
-    while (i < n1 && j < n2) {
-        if (left[i] <= right[j])
-            a[k] = left[i++];
-        else {
-            a[k] = right[j++];
-            res += (n1 - i);
+// same logic for finding reverse pairs - leetcode
+// A reverse pair is a pair (i, j) where 0 <= i < j < nums.length and nums[i] > 2 * nums[j]
+ int merge(int start, int mid,  int end, vector<int> & nums) {
+        int j = mid + 1;
+        int count = 0;
+        for (int i = start; i <= mid; ++i) {
+            while (j <= end && nums[i] > 2LL * nums[j]) {
+                j++;
+            }
+            count += (j - (mid + 1));
         }
+        
+        // standard merge logic
+        vector<int> temp;
+        int left = start, right = mid + 1;
+        while (left <= mid && right <= end) {
+            if (nums[left] <= nums[right]) {
+                temp.emplace_back(nums[left++]);
+            }
+            else
+                temp.emplace_back(nums[right++]);   
+        }
+        while (left <= mid)
+            temp.emplace_back(nums[left++]);
+        while (right <= end)
+            temp.emplace_back(nums[right++]);
+        
+        
+        for (int i = start; i <= end; ++i) {
+            nums[i] = temp[i - start];
+        }
+        
+        return count;
     }
-
-    while (i < n1)
-        a[k++] = left[i++];
-    while (j < n2)
-        a[k++] = right[j++];
-    return res;
-
-}
-// this merge sort logic also sorts both the halves
-int countInversion (int *arr, int l, int r) {
-    int res= 0;
-    if (l < r) {
-        int m = l + (r-l)/2;
-        res += countInversion(arr, l, m);
-        res += countInversion(arr, m+1, r);
-        res += countAndMerge(arr,l, m, r);
+    int mergeSort(int start, int end, vector<int> & nums) {
+        int inv = 0;
+        if (start >= end) return 0;
+        int mid = start + (end - start) / 2;
+        inv += mergeSort(start, mid, nums);
+        inv += mergeSort(mid + 1, end, nums);
+        inv += merge(start, mid, end, nums);
+        return inv;
     }
-    return res;
-} 
+    int reversePairs(vector<int>& nums) {
+        return mergeSort(0, nums.size() - 1, nums);
+    }
 
 
 int main() {

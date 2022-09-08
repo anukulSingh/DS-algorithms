@@ -17,7 +17,7 @@ struct Node
 // i.e el gte than the given one on the left
 // lower_bound() in set works as such
 // at one snapshot, we only need leftmost part of the element, so we may insert it one by one
-void printCeiling (int *arr, int n) {
+void printCeilingLeft (int *arr, int n) {
     cout << -1 << " "; // for first element
     set <int> s;
     s.insert(arr[0]);
@@ -27,6 +27,20 @@ void printCeiling (int *arr, int n) {
         }
         else 
             cout << -1 << " ";
+        s.insert(arr[i]);
+    }
+}
+
+// ceiling on right side of an array
+void printCeilingRight (int *arr, int n) {
+    set<int> s;
+    vector<int> ceilingRight;
+    for (int i = n- 1; i>= 0; --i) {
+        if (s.lower_bound(arr[i] != s.end())) {
+            ceilingRight.push_back(*(s.lower_bound()));
+        } else {
+            ceilingRight.push_back(-1);
+        }
         s.insert(arr[i]);
     }
 }
@@ -61,7 +75,7 @@ Node *prev = NULL, *first = NULL, *second = NULL
 void fixBST(Node * root) {
     if (root == NULL) return;
     fixBST(root->left);
-    if (prev !== NULL && root->key < prev->key) {
+    if (prev !== NULL && root->key < prev->key) { // prev != NULL ensures skippin root for first tym
         if (first == NULL)
             first = prev;
         second = root;

@@ -26,23 +26,23 @@ using namespace std;
 // count the set bits using look up table method
 // theta(1)
 
-// int table[256];
-// void initialize() {
-//     table[0] = 0;
-//     for(int i = 1; i < 256; ++i) {
-//         table[i] = (i & 1) + table[i/2];
-//     }
-// }
-// int count_set(int n) {
-//     int res = table[n & 0xff];
-//     n = n >> 8;
-//     res = res + table[n & 0xff];
-//     n = n >> 8;
-//     res = res + table[n & 0xff];
-//     n = n >> 8;
-//     res = res + table[n & 0xff];
-//     return res;
-// }
+int table[256];
+void initialize() {
+    table[0] = 0;
+    for(int i = 1; i < 256; ++i) {
+        table[i] = (i & 1) + table[i/2];
+    }
+}
+int count_set(int n) {
+    int res = table[n & 0xff];
+    n = n >> 8;
+    res = res + table[n & 0xff];
+    n = n >> 8;
+    res = res + table[n & 0xff];
+    n = n >> 8;
+    res = res + table[n & 0xff];
+    return res;
+}
 
 // check whether given no is a power of 2
 // any power of 2 has only one set bit

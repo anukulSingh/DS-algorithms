@@ -6,25 +6,25 @@ using namespace std;
 // int l =0, r = n-1;
 
 // pair with given sum check
-// bool isPair(int *arr,int n, int l,int r, const int x) {
-//     while (l < r) {
-//         if (arr[l] + arr[r] == x) return true;
-//         else if (arr[l] + arr[r] > x)
-//             r--;
-//         else 
-//             l++;
-//     }
-//     return false;
-// }
+bool isPair(int *arr,int n, int l,int r, const int x) {
+    while (l < r) {
+        if (arr[l] + arr[r] == x) return true;
+        else if (arr[l] + arr[r] > x)
+            r--;
+        else 
+            l++;
+    }
+    return false;
+}
 
 // triplet with given sum check
-// bool isTriplet(int *arr,int n, int l,int r, const int x) {
-//     for (int i = 0; i< n; ++i) {
-//         if (isPair(arr,n, i+1, n-1, x-arr[i]))
-//             return true;
-//     }
-//     return false;
-// }
+bool isTriplet(int *arr,int n, int l,int r, const int x) {
+    for (int i = 0; i< n; ++i) {
+        if (isPair(arr,n, i+1, n-1, x-arr[i]))
+            return true;
+    }
+    return false;
+}
 
 
 
@@ -34,15 +34,15 @@ using namespace std;
 // we can sort and check linearly if any element appears
 // works in nlog n, but modifies the array
 // one efficient way is of O(n) TC and O(n) AS as follows:
-// int findRepeating (int *arr, int n) {
-//     bool flag[n] = {false};
-//     for (int i = 0; i < n; ++i) {
-//         if (flag[arr[i]])
-//             return arr[i];
-//         flag[arr[i]] = true;
-//     }
-//     return -1;
-// }
+int findRepeating (int *arr, int n) {
+    bool flag[n] = {false};
+    for (int i = 0; i < n; ++i) {
+        if (flag[arr[i]])
+            return arr[i];
+        flag[arr[i]] = true;
+    }
+    return -1;
+}
 
 // second eff method is to use O(1) AS
 // here min ele in sequence is 1
@@ -50,42 +50,42 @@ using namespace std;
 // start from arr[0], take its value and use it as index for next element, at some point,
 // it will go backwards forming chain
 // for this, we use a two-phase algorithm
-// int findRepeating(int *arr, int n) {
-//     int slow= arr[0], fast = arr[0];
-//     // in first phase, slow moves 1 block at a time, fast moves two blocks at a time (front/back)
-//     // they are going to meet at some point i.e. slow = fast
-//     do {
-//         slow = arr[slow];
-//         fast = arr[arr[fast]];
-//     } while (slow != fast);
-//     //keep fast at same location, but move slow to start
-//     slow = arr[0];
-//     // in second phase, simple moving will get us to our result
-//     while (slow != fast) {
-//         slow = arr[slow];
-//         fast = arr[fast];
-//     }
-//     return slow;
-// }
+int findRepeating(int *arr, int n) {
+    int slow= arr[0], fast = arr[0];
+    // in first phase, slow moves 1 block at a time, fast moves two blocks at a time (front/back)
+    // they are going to meet at some point i.e. slow = fast
+    do {
+        slow = arr[slow];
+        fast = arr[arr[fast]];
+    } while (slow != fast);
+    //keep fast at same location, but move slow to start
+    slow = arr[0];
+    // in second phase, simple moving will get us to our result
+    while (slow != fast) {
+        slow = arr[slow];
+        fast = arr[fast];
+    }
+    return slow;
+}
 
 // to handle the 0 case too, treat every el as increased by 1
-// int findRepeatinginc(int *arr, int n) {
-//     int slow= arr[0]+1, fast = arr[0]+1;
-//     // in first phase, slow moves 1 block at a time, fast moves two blocks at a time (front/back)
-//     // they are going to meet at some point i.e. slow = fast
-//     do {
-//         slow = arr[slow]+1;
-//         fast = arr[arr[fast] + 1] +1;
-//     } while (slow != fast);
-//     //keep fast at same location, but move slow to start
-//     slow = arr[0]+1;
-//     // in second phase, simple moving will get us to our result
-//     while (slow != fast) {
-//         slow = arr[slow] + 1;
-//         fast = arr[fast] + 1;
-//     }
-//     return slow - 1;
-// }
+int findRepeatinginc(int *arr, int n) {
+    int slow= arr[0]+1, fast = arr[0]+1;
+    // in first phase, slow moves 1 block at a time, fast moves two blocks at a time (front/back)
+    // they are going to meet at some point i.e. slow = fast
+    do {
+        slow = arr[slow]+1;
+        fast = arr[arr[fast] + 1] +1;
+    } while (slow != fast);
+    //keep fast at same location, but move slow to start
+    slow = arr[0]+1;
+    // in second phase, simple moving will get us to our result
+    while (slow != fast) {
+        slow = arr[slow] + 1;
+        fast = arr[fast] + 1;
+    }
+    return slow - 1;
+}
 
 // here is another prob, finding both repeating and missing
 // here we use the XOR technique

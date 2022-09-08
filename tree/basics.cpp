@@ -142,11 +142,25 @@ void printLeft(node *root) {
     }
 }
 
+// get the size of the tree
+int getSize(node *root) {
+    if (root == NULL) return 0;
+    return 1 + getSize(root->left) + getSize(root->right);
+}
+
+// maximum of a B-tree
+int getMax(node *root) {
+    if (root == NULL) return INT_MIN;
+    return max(root->key, max(getMax(root->left), getMax(root->right)));
+}
+
+
+
 // children sum property
 // sum of sum of values of left and right child should be equal to that of the node value
 bool isChildrenSum(node *root) {
     if (root == NULL) return true;
-    if (root->left == NULL && root->right == NULL) return true;
+    if (root->left == NULL && root->right == NULL) return true; // we are accesssing left amd right child below, so we have to check for existence, if bot null,
     int sum = 0;
     if (root->left) sum += root->left->key;
     if (root->right) sum += root->right->key;
@@ -216,10 +230,10 @@ node *prev = NULL;
 node* convertToDll(node *root) {
     if (root == NULL) return root;
     node *head = convertToDll(root->left);
-    if (prev == NULL) head = root;
+    if (prev == NULL) head = root; // to identify for the first node of LL only
     else {
-        root->left = prev;
-        prev->right = right;
+        root->left = prev;  // visualize left as prev ptr
+        prev->right = root; // visualize right as next ptr
     }
     prev = root;
     convertToDll(root->right);
@@ -247,26 +261,124 @@ node *cTree(int *int, int *pre, int is, int ie) {
     root->right = cTree(in, pre, inIndex, ie);
 }
 
-// LCA of a node in binary tree
 
+// tree traversal in spiral form
+//in one level left to right, then right to left in next level , the so on
+// method 1
+// we can maintain s stack and flag to know when the reverse way has to printed
+
+ vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        
+        queue<TreeNode *> q;
+        stack<TreeNode *> s;
+        vector<vector<int> > ans;
+        if (root == NULL) return ans;
+
+        q.push(root);
+        bool reverse = false;
+        while (!q.empty()) {
+            int count = q.size();
+            vector<int> res;
+            for (int i = 0; i < count; ++i) {
+                TreeNode *curr = q.front();
+                q.pop();
+                if (reverse) {
+                    s.push(curr);
+                } else {
+                    res.push_back(curr->val);
+                }
+
+                if (curr->left) q.push(curr->left);
+                if (curr->right) q.push(curr->right);
+            }
+            while (!s.empty()) {
+                res.push_back(s.top()->val);
+                s.pop();
+            }
+            ans.push_back(res);
+            reverse = !reverse;
+        }
+        return ans;
+    }
+
+// diameter of a B-tree
+// longest path in tree bw any two leaf nodes
+// naive find 1 + max  (lh, rh) fofr evrry node
+// efficient now
+    int diameter = 0;
     
+    int height(TreeNode* root) {
+        if (root == NULL) return 0;
+        int lh = height(root->left);
+        int rh = height(root->right);
+        
+        diameter = max(diameter, 1 + lh + rh);
+        return 1 + max(lh, rh);
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        int h = height(root);
+        return diameter - 1;
+    }
+
+
 // size of a binary tree
 // TC O(n) AS is O(h)
 // at any time, there are at most h+1 function calls in stack
 // if we use iterative solution using queue(level order,) it will have O(w) AS width of the tree
-// int getSize (node *root) {
-//     if (root == NULL) return 0;
-//     return 1 + getSize(root->left) + getSize(root->right);
-// }
+int getSize (node *root) {
+    if (root == NULL) return 0;
+    return 1 + getSize(root->left) + getSize(root->right);
+}
 
 // maximum in binary tree
 // TC and AS like previous
 // if tree is skewed, level order  traversal is better, if perfect tree, then recursive is better (for AS)
-// int getMax (node *root) {
-//     if (root == NULL)
-//         return INT_MIN;
-//     return max(root->key, max(getMax(root->left), getMax(root->right)));
-// }
+int getMax (node *root) {
+    if (root == NULL)
+        return INT_MIN;
+    return max(root->key, max(getMax(root->left), getMax(root->right)));
+}
+
+// lca between two nodes
+// using lca, we can also find shortest distance bw tow nodes in a binary tree
+// method 1
+// make two paths for both nodes, and the last common element from left is our answer
+bool findPath (node *root, vector<node *> &p, int n) {
+    if (root == NULL) return false;
+    p.push_back(root);
+    if (root->key == n) return true;
+    if (findPath(root->left, p, n) || findPath(root->right, p, n)) return true;
+    p.pop_back();
+    return false;
+}
+node *lca (node *root, int n1, int n2) {
+    vector<node *> path1, path2;
+    // if any of the tow nodes are not there in the tree, it should not return anything
+    if (findPath(root, path1, n1) == false || findPath(root, path2, n2) == false) {
+        return nullptr;
+    }
+    // path1 and path2 are filled now
+    for (int i = 0; i < path1.size() -1 && i < path2.size() - 1; ++i) {
+        if (path1[i+1] != path2[i+1]) {
+            return path[i];
+        }
+    }
+    return nullptr;
+}
+
+// efficient lca
+// gives incorrect result if keys are not present in the tree
+// one traversal an O(h) AS
+node *lca ()
+
+// burn a binary tree from leaf 
+// so that whole binary tree burns
+// it is same as finding the distnace of farthest node from the given leaf node
+// tim etaken = farthest distance
+int res = 0;
+int timeToBurn(node *tree, int leaf, int &dist) {
+
+}
 int main() {
     node *root = new node(10);
     root->left = new node(20);

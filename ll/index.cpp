@@ -19,21 +19,22 @@ void printList(Node *head) {
     }
 }
 // // recursive traversal
-// void rprint(Node *head) {
-//     if (head == NULL) return;
-//     cout << head->data << " ";
-//     rprint(head->next);
-// }
+void rprint(Node *head) {
+    if (head == NULL) return;
+    cout << head->data << " ";
+    rprint(head->next);
+}
 
 // Insert at beggining
-// Node *insertAtStart(Node *head, int x) {
-//     Node *temp = new Node(x);
-//     if (head == NULL) return temp;
-//     temp->next = head;
-//     return temp;
-// }
+Node *insertAtStart(Node *head, int x) {
+    Node *temp = new Node(x);
+    if (head == NULL) return temp;
+    temp->next = head;
+    return temp;
+}
 
 // Insert at end
+// it reaches the last element
 Node *insertAtEnd(Node *head, int x) {
     Node *temp = new Node(x);
     if (head == NULL) return temp;
@@ -53,20 +54,21 @@ Node *deleteAtStart(Node *head, int x) {
 
      else {
          Node *temp = head;
-         delete head;
-         return temp;
+         head = head->next;
+         delete temp;
+         return head;
      }
 }
 
 // delete at tail
 Node *deleteAtEnd(Node *head) {
     if (head == NULL) return  NULL;
-    if (head->next == NULL) {
+    if (head->next == NULL) { // only one element
         delete head;
         return NULL;
     }
     Node *curr = head;
-    while(curr->next->next != NULL) {
+    while(curr->next->next != NULL) { // reach second last element
         curr = curr->next;
     }
     delete(curr->next);
@@ -91,44 +93,44 @@ int search (Node *head, int key) {
 }
 
 // middle of a singly linked list
-// void printMiddle (Node *head) {
-//     if (head == NULL) return;
-//     int count = 0;
-//     Node *curr;
-//     for (curr = head; curr != NULL; cur = curr->next) {
-//         count ++;
-//     }
-//     curr = head;
-//     for (int i = 0;  i < count/2; ++i)
-//         curr = curr->next;
-//     cout << curr->data;
-// }
+void printMiddle (Node *head) {
+    if (head == NULL) return;
+    int count = 0;
+    Node *curr;
+    for (curr = head; curr != NULL; cur = curr->next) {
+        count ++;
+    }
+    curr = head;
+    for (int i = 0;  i < count/2; ++i)
+        curr = curr->next;
+    cout << curr->data;
+}
 // efficient solution
 // maintaining slow and fast pointers
 // when fast reaches the end, slow reaches the destination
-// void printMiddle (Node *head) {
-//     if (head == NULL) return;
-//     Node *slow = head, *fast = head;
-//     while ((fast != NULL) && (fast->next != NULL)) {
-//         slow = slow->next;
-//         fast = fast->next->next;
-//     }
-//     cout << slow->data;
-// }
+void printMiddle (Node *head) {
+    if (head == NULL) return;
+    Node *slow = head, *fast = head;
+    while ((fast != NULL) && (fast->next != NULL)) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    cout << slow->data;
+}
 
 // Nth node from end of ll
 // Naive - find length and traverse from 1 to len-n+1
 // Efficient
 // take two pointers, one at start, other at start+n, move them by one everytime
-// once second reaches null, first reaches the dest
 void printNthEnd (Node *head, int n) {
     if (head == NULL) return;
     Node *second = head;
-    for (int i = 0; i < n; ++i){
+    for (int i = 0; i < n; ++i){ // second pointer at start + n
         if (head == NULL) return;
         second = second->next;
     }
-    Node *first = head;
+    Node *first = head; // first pointer at start
+    // once second reaches null, first reaches the dest
     while (second != NULL) {
         first = first->next;
         second = second->next;

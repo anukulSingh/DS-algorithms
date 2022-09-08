@@ -50,7 +50,7 @@ int countRotatedFreq (int *arr, int n) {
                     end = mid - 1;
                 }
                 else {
-                  start = mid + 1;  
+                  start = mid + 1;  // it does not lie in sorted half
                 }   
             }
             else {

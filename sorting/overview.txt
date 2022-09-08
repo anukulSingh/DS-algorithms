@@ -1,0 +1,18 @@
+overview
+
+1. binary array (using partition of quicksort, preferrably hoare here)
+2. array with 3 values (partition, dutch national flag)
+3. array of size n and small ranged values (counting sort)
+4. array of size n and rage id of quadratic or cubic (radix sort)
+5. array is uniformly distributes across a ramge (bucket sort)
+6. when memory writes are costly (selection sort, cycle sort optimally)
+7. when adjacent alements swap are allowed (bubble sort, cocktail sort (optimized bubble))
+8. when array is small (insertion sort is best, 10-20)
+9. when available extra memory is small (shell sort)
+
+general purpose sorting algorithms
+merge sort O(n log n) D & C
+heap sort O (n log n)
+quick sort O (n log n), quad in worst D & C
+
+quick sort is fastest, merge sort is the only stable, works best for linked list

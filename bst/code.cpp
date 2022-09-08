@@ -14,22 +14,16 @@ struct Node {
 // if we knew key in advance, we can avoid this by making a balanced tree
 // we can restructure(rotation), to prevent it from becoming a unbalanced tree, if keys are taken as input
 
-// bool search (Node *root, int x) {
-    // while (root != NULL) {
-    //     if (root->key == x) return true;
-    //     else if (root->key < x)
-    //         root = root->right;
-    //     else
-    //         root = root->left;
-    // }
-    // return false;
-
-    // recursively
-    // if (root->key == x) return true;
-    // if (root->key == NULL) return false;
-    // else if (root->key < x) return search(root->left, x);
-    // else return search(root->right, x);
-// }
+bool search (Node *root, int x) {
+    while (root != NULL) {
+        if (root->key == x) return true;
+        else if (root->key < x)
+            root = root->right;
+        else
+            root = root->left;
+    }
+    return false;
+}
 
 
 
