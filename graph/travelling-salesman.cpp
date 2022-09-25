@@ -7,6 +7,9 @@ using namespace std;
 #define V 4
 
 // we will iterate over all permutations of possible paths
+
+// Naive way to get it
+// O(fact(n)) TC
 int travllingSalesmanProblem(int graph[][V], int s) {
 
 	// store all vertex except spurce

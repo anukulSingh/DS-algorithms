@@ -116,10 +116,12 @@ pair<int, int> find_any_solution (int a, int b, int c) {
 
 // check for prime
 bool isPrime (int n) {
-	if (n == 1) return false;
-	if (n == 2 || n == 3) return true;
-	if (n % 2 == 0 || n % 3 == 0)
+	if (n == 1) return false; // if n is 1
+	if (n == 2 || n == 3) return true; // if n is 2 or 3
+	if (n % 2 == 0 || n % 3 == 0) // if n is multiple of 2 , 3 and 6
 		return false;
+
+	// prev cases for faster result in large array
 	for (int i = 5; i*i <= n; i += 6) 
 		if (n % i == 0 || n % (i + 2) == 0)
 			return false;
@@ -135,6 +137,8 @@ int lcm (int a, int b) {
 // prime factors of a number
 // O(sqrt(n))
 void printPrimeFactors (int n) {
+
+	// handle cases for 1,2, 3 and multiple
 	if (n <= 1) return;
 	while (n % 2 == 0) {
 		cout << 2 << " ";
@@ -167,7 +171,7 @@ void printDivisors(int n) {
 		if (n % i == 0) {
 			cout << i <<" ";
 		}
-		--i;
+		i--;
 	for ( ;i >= 1; --i)
 		if (n % i == 0)
 			cout << n/i << " ";
@@ -190,7 +194,7 @@ void sieve(int n) {
 //optimized sieve O(n loglogn) ~ O(n)
 void sieve(int n) {
 	vector <bool> isPrime(n+1, true);
-	for (int i = 2; i <= n; ++i){
+	for (int i = 2; i*i <= n; ++i){
 		if (isPrime[i]){
 			cout << i << " ";
 			for (int j = i*i; j <= n; j = j + i)
@@ -198,6 +202,36 @@ void sieve(int n) {
 		}
 	}
 }
+
+// efficient
+// TC = O (n log(log n))
+void SieveOfEratosthenes(int n) 
+{ 
+	// Create a boolean array "prime[0..n]" and initialize 
+	// all entries it as true. A value in prime[i] will 
+	// finally be false if i is Not a prime, else true. 
+	bool prime[n+1]; 
+	memset(prime, true, sizeof(prime)); 
+
+	for (int p=2; p*p<=n; p++) 
+	{ 
+		// If prime[p] is not changed, then it is a prime 
+		if (prime[p] == true) 
+		{ 
+			// Update all multiples of p greater than or 
+			// equal to the square of it 
+			// numbers which are multiple of p and are 
+			// less than p^2 are already been marked. 
+			for (int i=p*p; i<=n; i += p) 
+				prime[i] = false; 
+		} 
+	} 
+
+	// Print all prime numbers 
+	for (int p=2; p<=n; p++) 
+	if (prime[p]) 
+		cout << p << " "; 
+} 
 
 // rule of thumb
 //pow(a, n) = 1, if n == 0

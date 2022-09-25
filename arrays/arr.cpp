@@ -105,29 +105,29 @@ void rightRotate(int *arr, int n, int d) {
 }
 
 // Leaders in an array, take a look
-// void leaders(int *arr, int n) {
-//     int curr_index = arr[n-1];
-//     cout << curr_index<<" ";
-//     for(int i = n-2; i >= 0; --i) {
-//         if (curr_index < arr[i]) {
-//             curr_index = arr[i];
-//             cout << curr_index<<" ";
-//         }
-//     }
-// }
+void leaders(int *arr, int n) {
+    int curr_index = arr[n-1];
+    cout << curr_index<<" ";
+    for(int i = n-2; i >= 0; --i) {
+        if (curr_index < arr[i]) {
+            curr_index = arr[i];
+            cout << curr_index<<" ";
+        }
+    }
+}
 
 // Maximum difference algorithm (order matters)
 // another way of keeping tracks in array
-// int maxDifference(int *arr, int n) {
-//     int res = arr[1] - arr[0];
-//     int minVal = arr[0];
+int maxDifference(int *arr, int n) {
+    int res = arr[1] - arr[0];
+    int minVal = arr[0];
 
-//     for(int i =0; i < n; ++i) {
-//         res = max(res, arr[i] - minVal);
-//         minVal = min(minVal, arr[i]);
-//     }
-//     return res;
-// }
+    for(int i =0; i < n; ++i) {
+        res = max(res, arr[i] - minVal);
+        minVal = min(minVal, arr[i]);
+    }
+    return res;
+}
 
 // frequency in sorted array
 // void printFreq(int *arr, int n) {

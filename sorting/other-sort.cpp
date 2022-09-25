@@ -8,29 +8,37 @@ using namespace std;
 // Boundary Cases: Bubble sort takes minimum time (Order of n) when elements are already sorted.
 // Sorting In Place: Yes
 // Stable: Yes
+
+// in worst case n-1 passes are required
+// in worst case, total no if swaps = n *(n -1) / 2
+
+// when array is almost sorted (tiny error), we can use it in O(n) TC
 void bubbleSort(int *arr, int n) {
     for (int i = 0; i < n-1; ++i) {
         bool swapped = false;
 
-        for (int j = 0; j<n-i-1; ++j) {
+        // last i elements have already been swapped
+        for (int j = 0; j< n-i-1; ++j) {
             if (arr[j] > arr[j+1]) {
                 swap(arr[j],arr[j+1]);
                 swapped = true;
             }
         }
+        // if there has been no any inversions, then array is alreafy sorted, so comtinue to next pass
         if (swapped == false)
             break;
     }
 }
 
-// in place
+// In place
 // stable
 // good for memory intensive resource
 // not stable, but can be made so
 void selectionSort(int *arr, int n) {
 
-    for (int i =0; i< n-1; ++i) {
+    for (int i = 0; i < n-1; ++i) {
         int min_index = i;
+        // finding the min element
         for (int j = i+1; j < n; ++j) 
             if (arr[j] < arr[min_index])
                 min_index = j;
@@ -38,10 +46,19 @@ void selectionSort(int *arr, int n) {
     }
 }
 
+// Insertion sort is a simple sorting algorithm that works similar to the way you sort playing cards in your hands.
+// The array is virtually split into a sorted and an unsorted part.
+// Values from the unsorted part are picked and placed at the correct position in the sorted part.
+
+//Basically, Insertion sort is efficient for small data values
+//Insertion sort is adaptive in nature, i.e. it is appropriate for data sets which are already partially sorted.
+
 void insertionSort(int *arr, int n) {
     for (int i =1; i< n; ++i) {
-        int key = arr[i];
+        int key = arr[i]; // take the current element
         int j = i-1;
+        // try putting the current element in thr correct position on the left side
+        // keep shifting them to right 
         while (j >= 0 && arr[j] > key) {
             arr[j+1] = arr[j];
             j--;
@@ -72,6 +89,8 @@ void cycleSort() {
         }
     }
 }
+
+
 
 // if data is uniformly distributed bw intervals till max element, then O(n) TC
 void bucketSort () {

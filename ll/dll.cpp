@@ -52,6 +52,7 @@ Node *reversedll (Node *head, int data) {
         curr->prev = curr->next;
         curr->next = prev;
 
+        // update current node
         curr = curr->prev;
     }
     return prev->prev;

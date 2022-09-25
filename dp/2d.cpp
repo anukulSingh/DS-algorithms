@@ -1,5 +1,5 @@
 // edit distnace problem
-// convert string s1 tp s2, minimum no fo ops
+// convert string s1 to s2, minimum no fo ops
 // you can delete a char, inser a char, replace a char with any other char
 // recursive
 int ed (string s1, string s2, int m, int n) {

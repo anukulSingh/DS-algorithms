@@ -2,7 +2,7 @@
 using namespace std;
 
 
-struct Node  
+struct node  
 { 
   int key; 
   struct Node *left;
@@ -12,6 +12,32 @@ struct Node
       left=right=NULL;
   }
 };
+
+// insert in a bst
+node *insert (node *root, int x) {
+    if (!root) return new node(x);
+    if (root->key < x) // insert in sright subtree
+        root->right = insert(root->right, x);
+    else if (root->key > x) // inserty on left side
+        root->left = insert(root->left, x);
+
+    return root;
+}
+
+// search in a bst
+bool search (node *root, int x) {
+    while (!root) {
+        if (root->key == x)
+            return true;
+        else if (root->key < x)
+            root = root->right;
+        else
+            root = root->left;
+    }
+    return false;
+}
+
+
 // ceiling of all the left side elements in an array
 // smallest element larger than the given element
 // i.e el gte than the given one on the left
@@ -82,6 +108,19 @@ void fixBST(Node * root) {
     }
     prev = root;
     fixBST(root->right);
+}
+
+// kth smallest element
+// naive by inorder trav
+void printByKth (npde *root, int k, int &count) {
+    if (!root) return;
+    printByKth(root->left, k, count);
+    count++;
+    if (count == k) {
+        cout << root->key;
+        return;
+    }
+    printByKth(root->right, k, count);
 }
 
 // find pair with given sum in bst

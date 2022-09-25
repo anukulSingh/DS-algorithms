@@ -66,6 +66,49 @@ void deleteNode (node *ptr) {
     delete(temp);
 }
 
+
+
+// merge twi sorted LL
+// we have to maintain 2 pointers
+// a and b
+// and also maintain a tail pointer
+// TC O(m + n)
+node *sortedMerge (node *a, node *b) {
+    // if anb LL is empty
+    if (a == NULL) return b;
+    if (b == NULL) return a;
+
+    // initializing head an tail in for smaller head, and move one step in that LL
+    node *head = NULL, *tail = NULL;
+    if (a->data <= b->data) {
+        head = tail = a;
+        a = a->next;
+    } else {
+        head = tail = b;
+        b = b->next; 
+    }
+
+    // our merge logic
+    while (a != NULL && b != NULL) {
+        if (a->data <= b->data) {
+            tail->next = a;
+            tail = a;
+            a = a->next;
+        } else {
+            tail->next = b;
+            tail = b;
+            b = b->next;
+        }
+    }
+
+    // remaining elements in one of the LL
+    if (a != NULL) tail->next = a;
+    else if (b != NULL) tail->next = b;
+
+    return head;
+}
+
+
 int main() {
 
     

@@ -66,17 +66,17 @@ bool isZeroSum (int *arr, int n) {
     int pre_sum = 0;
     for (int i = 0; i < n; ++i) {
         pre_sum += arr[i];
+        if (pre_sum == 0) return true;
         if (us.find(pre_sum) != us.end()) {
             return true;
         }
-        if (pre_sum == 0) return true;
         us.insert(pre_sum);
     }
     return false;
 }
 
 // find subarray with given sum, elements are all integers
-bool isGivenSum (int *arr, int n) {
+bool isGivenSum (int *arr, int n, int sum) {
     unordered_set <int> us;
     int pre_sum = 0;
     for (int i = 1; i < n; ++i) {
@@ -92,18 +92,19 @@ bool isGivenSum (int *arr, int n) {
 
 // length of the longest subarray with given sum
 // keep track of the index of the prefix sum too, then we can do it
-bool longestSubSum (int *arr, int n, int sum) {
+int longestSubSum (int *arr, int n, int sum) {
     unordered_map<int, int> m;
     int pre_sum = 0, res = 0;
     for (int i = 0; i < n; ++i) {
         pre_sum += arr[i];
-        if (pre_sum == sum) res = i + 1;
+        if (pre_sum == sum) res = i + 1; // if our subarray starts with 0 index, then prefix sum is at 1
         if (m.find(pre_sum) == m.end()) // no point inserting the same pre sum, as it indicates 0 subarray sum
             m.insert({pre_sum, i});
         if (m.find(pre_sum - sum) != m.end()) {
             res = max(res, i - m[pre_sum - sum]);
         }
     }
+    return ans;
 }
 
 // count distinct nos in every window of array

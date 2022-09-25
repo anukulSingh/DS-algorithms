@@ -130,6 +130,29 @@
 
 
 
+    // search in a matrix, where entries are sorted
+    // first element if row is greater than last element of prev row
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if (!matrix.size()) return false;
+        int l0 = 0;
+        int h1 = (matrix.size() * matrix[0].size()) - 1;
+        
+        while(l0 <= h1) {
+            int mid = l0 + (h1- l0) / 2;
+            if (matrix[mid / matrix[0].size()][mid % matrix[0].size()] == target) {
+                return true;
+            }
+            else if (matrix[mid / matrix[0].size()][mid % matrix[0].size()] < target) {
+                l0 = mid + 1;
+            }
+            else
+                h1 = mid - 1;
+        }
+        return false;
+    }
+
+
+
  /* nth root of an integer
 	TC is n*log2(m * pow(10, d))
  */

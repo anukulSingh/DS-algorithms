@@ -143,12 +143,13 @@ void printLeft(node *root) {
 }
 
 // get the size of the tree
+// no of nodes in a BT
 int getSize(node *root) {
     if (root == NULL) return 0;
     return 1 + getSize(root->left) + getSize(root->right);
 }
 
-// maximum of a B-tree
+// maximum val of a B-tree
 int getMax(node *root) {
     if (root == NULL) return INT_MIN;
     return max(root->key, max(getMax(root->left), getMax(root->right)));
@@ -158,6 +159,7 @@ int getMax(node *root) {
 
 // children sum property
 // sum of sum of values of left and right child should be equal to that of the node value
+// here we have to use left and right child in current calculation, so it has to be in base case 
 bool isChildrenSum(node *root) {
     if (root == NULL) return true;
     if (root->left == NULL && root->right == NULL) return true; // we are accesssing left amd right child below, so we have to check for existence, if bot null,
@@ -170,6 +172,25 @@ bool isChildrenSum(node *root) {
         isChildrenSum(root->left) &&
         isChildrenSum(root->right)
     );
+}
+
+
+// max absolute diff bw a node and it's descendant
+int util (Tree* root, int *res) {
+    if (root == NULL) return INT_MAX;
+
+    if (root->left == NULL && root->right == NULL)
+        return root->val;
+    int minNo = min(util(root->left, res), util(root->right, res));
+
+    *res = max(*res, abs(root->val - minNo));
+
+    return min(root->val, minNo);
+}
+int solve(Tree* root) {
+    int res = INT_MIN;
+    int minNo = util(root, &res);
+    return res;
 }
 
 
